@@ -4,8 +4,12 @@ title: Routing
 ---
 
 When content is published in Superdesk, there are a large variety of workflows available for deciding where it should end up.
+There are four important parts to the configuration of the publication pipeline:
 
-https://sofab.atlassian.net/wiki/spaces/SDHOWTO/pages/5011538016/Publishing+Distribution
+- Who gets the content: [subscribers](#subscribers)
+- What they should receive: [products](#products)
+- Where the content should be sent: destinations
+- How the content should be delivered: formats
 
 ## Content filters
 
@@ -22,16 +26,36 @@ Content that matches this filter is blocked from being sent to subscribers by de
 An **archive block** prevents matched content from being sent to the archive once it has expired {TODO: Link to expiry docs}.
 Instead, it is permanently deleted {TODO: Is the deletion permanent?}.
 
+### Products
+
+Products act as another layer of content filtering in the publication pipeline.
+Typical products work exactly the same as a content filter, but can have territorial restrictions and support blocking content.
+When saved as a "blocking" product, you can think of it as a filter for all content that does *not* match the filter criteria.
+The simplest product has no filters, and therfore includes all published content.
+
+Product codes are comma-separated content descriptors. {TODO: EXPLAIN}
+
+## Subscribers
+
+Subscribers can be thought of as individual customers.
+Each subscriber can receive a mixture of products at a number of destinations.
+Subscribers can be services such as websites and mobile apps, or other distribution systems such as Superdesk Publisher.
+
+When creating subscribers, you can provide an email to automatically notify when published content is killed (unpublished).
+Alternately, add any email address in a valid format in this field.
+
+Keep subscribers organised by setting custom target types (such as for differentiating between newspapers, magazines, businesses, etcetera).
+These types are defined in the `subscriber_types` [vocabulary](/vocabulary).
+
 ## Internal destinations
 
 While most content will usually be pushed directly to subscribers, Superdesk also has the abilitiy to push content to **internal destinations**.
 The content is copied, and then the copy is sent to a selected desk.
 
-Admins can configure the exact desk and stage in the admin settigs {TODO: Link to admin settings}.
+Admins can configure the destination desk and stage in the admin settigs {TODO: Link to admin settings}.
+Content filters can be used to only move specific content.
 Optionally, macros {TODO: Link to macros} can be run on the content to transform it in some way.
 These macros can also automatically publish the modified copy from the new desk.
-
-{TODO: Discuss content filters}
 
 Internal destinations come in very handy for translating content.
 For instance, all stories published from the news desk could be automatically copied to a translation desk upon publishing, with a macro that changes the language metadata of the copy.
